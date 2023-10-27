@@ -1,168 +1,18 @@
-import os
-from time import sleep
-from actions import *
+## Instructions
 
-os.system('clear')
+You will work together with a partner to build a text adventure game. [Wikipedia article](https://en.wikipedia.org/wiki/Text-based_game)
 
-# Define objects
-objects = {
-    'phone':{'description':'a regular cell phone','usable':True,'action':use_phone},
-    'key': {'description': 'A small key', 'usable': True, 'action': unlock_door},
-    'book': {'description': 'An old book', 'usable': False},
-    'note':{'description':'A crumpled piece of paper with the number 102 barely visible', 'usable':False}
-    # Add more objects as needed  or add a note function to make user solve a puzzle to get the message
-}
-# define descriptions
-dialog = {
-    'entry': '''\nThe door squeaks shut behind you.. \nIt is quite hard to see\n A small bat whizzes by your head''',
-    'kitchen': '''\nA musty kitchen.  There is a little light coming from a small filthy window over the sink''',
-    'closet': '''\nThere is nothing here''',
-    'road':'''It is raining heavily and your car has blown a tire.. You see the light from an old house to the east ''',
-    'finish':'''You walk past your flattened Tesla and wearily thumb a ride back to the nearest town\n\n'''
-}
+Text games were very popular back in the day.  The day being fancy computer graphics, good sound, and now VR.
 
-# Player's inventory
-inventory = ['phone']
+But they still have a lot of the basic elements of a good game.  You make the graphics in your mind.  Kind of like the difference between a book and a movie based on a book.
 
-def intro():
-    print('''\nYour car has broken down on a dark, rainy night.
-\nYou can see a light from an old mansion behind an iron gate thru the woods''')
-    ans = input ('\nWalk to house? y/n..')
-    ans = ans[0].lower()    # clean up input
-    if ans == 'y':
-        entry()
-    else:
-        print ('''\nYou chose to stay in your car.  The wind gets stronger and stronger.  There is no cell signal. You wait.
-\n\nA large tree falls on your car''')
-        sleep(1)
-        os.system('clear')
-        print('''
-### #           ###       #
- #  ### ###     #   ##  ###
- #  # # ##      ##  # # # #
- #  # # ###     #   # # ###
- #              ###
-''')
+I think this a great project for a beginning programmer.  There are more than enough things to learn working on a game like this, all of which you would need to know to go further. 
 
-def road():
-    this_room = 'road'
-    exits = {'e': entry}
-    objects_in_room = []  # No objects in this room
-    print_room_description(this_room, objects_in_room)
-    key, destination = navigate(exits, this_room, objects_in_room)
-    destination()
+I have written the harder bits, all as functions.  It is no different than using turtle functions.  I do not know or care about how turtle.right() works and you do not need to know how navigate() works in this game to navigate.
 
-def kitchen():
-    this_room = 'kitchen'
-    exits = {
-        'e': finish,
-        's': entry
-    }
-    objects_in_room = ['book']  # Objects available in this room
-    objects_in_room = [obj for obj in objects_in_room if obj not in inventory]
-    print_room_description(this_room, objects_in_room)
-    key, destination = navigate(exits, this_room, objects_in_room)
-    destination()
+My hope is that you study navigate() and some of my functions, and try to understand what is happening, but it will do it's thing regardless :)
 
-def entry():
-    this_room = "entry"
-    exits = {
-        'n': kitchen,
-        's': closet
-    }
-    objects_in_room = ['key']  # Objects available in this room
-    objects_in_room = [obj for obj in objects_in_room if obj not in inventory]
-    print_room_description(this_room, objects_in_room)
-    key, destination = navigate(exits, this_room, objects_in_room)
-    destination()
+## How to start
 
-def closet():
-    this_room = 'closet'
-    exits = {'n': entry}
-    objects_in_room = []  # No objects in this room
-    objects_in_room = [obj for obj in objects_in_room if obj not in inventory]
-    print_room_description(this_room, objects_in_room)
-    key, destination = navigate(exits, this_room, objects_in_room)
-    destination()
+To start, you need a written game description, a map, a list of all the items in your rooms, what happens when a player uses an item.
 
-def finish():
-    print(dialog['finish'])
-    sleep(2)
-    print('''
-### #           ###       #
- #  ### ###     #   ##  ###
- #  # # ##      ##  # # # #
- #  # # ###     #   # # ###
- #              ###
-''')
-    #print ('The End!')
-###################################################### General Functions #################
-
-def print_room_description(room, objects_in_room):
-    os.system('clear')
-    l = len (room) + 15
-    print ('*'* l)
-    print(f'* You are in {room} *')
-    print ('*'* l + '\n')
-    #print('Objects in the room:')
-    i = ", ".join(inventory)
-    print(f'You have {i}\n')
-    for obj in objects_in_room:
-        print(f'- There is a {objects[obj]["description"]}')
-    print(dialog[room])
-
-def navigate(exits, current_room, objects_in_room):
-    while True:
-        if  len(objects_in_room) > 0:
-            print('\nYou see the following objects:')
-            for obj in objects_in_room:
-                print(f'- {obj}')
-            action = input('\nDo you want to take or use an object? (Type "take" or "use" or press Enter to continue): ')
-            if action.lower() == 'take':
-                take_object(objects_in_room)
-            elif action.lower() == 'use':
-                use_object(inventory)
-        choice = input('\nWhich way do you choose? (n, e, s, or w) .. ')
-        os.system('clear')
-        if choice in exits:
-            return choice, exits[choice]
-        else:
-            os.system('clear')
-            print("\nYou can't go that way..\n")
-
-
-def take_object(objects_in_room):
-# needs code to remove object from room when taken
-    obj_to_take = input('Enter the name of the object you want to take: ')
-    if obj_to_take in objects_in_room:
-        objects_in_room.remove(obj_to_take)
-        inventory.append(obj_to_take)
-        print(f'\nYou took the {obj_to_take}')
-    else:
-        print('\nThat object is not in the room.')
-
-
-
-def use_object(inventory):
-    if not inventory:
-        print('\nYou have no objects in your inventory.')
-        return
-
-    print('\nYou have the following objects in your inventory:')
-    for obj in inventory:
-        print(f'- {obj}')
-
-    obj_to_use = input('Enter the name of the object you want to use: ')
-    if obj_to_use in inventory:
-        if 'action' in objects[obj_to_use]:
-            action = objects[obj_to_use]['action']
-            print(f'\nYou used the {obj_to_use}.')
-            action()  # Call the function reference
-        else:
-            print(f'\nYou cannot use the {obj_to_use}.')
-    else:
-        print('\nYou do not have that object in your inventory.')
-
-
-if __name__ == "__main__":
-    intro()

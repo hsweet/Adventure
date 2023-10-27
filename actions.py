@@ -2,13 +2,16 @@ import os
 from random import randint
 from time import sleep
 
+
+'''Put all action functions here. def room(room_name) the parameter is required even if the function does not use it'''
+
 # global variables
 charge = 10  # phone is fully charged
 cell_signal = 10
 
 os.system('clear')
 
-def use_phone():
+def use_phone(room_name):
     # add code to drain battery each time used
     # the way out could be the correct extension
     os.system('clear')
@@ -49,19 +52,24 @@ def ring(times):
         print ("Ring", end = ", ")
         sleep (1)
 
-def unlock_door():
-    print('Door unlocked!')
+def unlock_door(room_name):
+    if room_name == 'closet':
+        os.system('clear')
+        print(f'You hear a click.')
+        print(f'\nThe safe is unlocked in {room_name}!')
+        print('''\nYou open the door and pick up the small electronic device inside\n\n
+Holy Cow! It is a power bank that fits your phone!''')
+    else:
+        print('\nThere is nothig to unlock here.')
 
-def read_note():
+def read_note(room_name):
   # add the ability to use phones light to read
   print('''You try to read the waterstained note.\nIt is too dark to read\n You decide to head back to the kitchen.''')
 
-def game_help():
+def game_help(room_name):
   os.system('clear')
   print('''
   Your car has broken down and now you find youself in a deserted house.  You can ....
   ''')
 
-if __name__ == "__main__":  #only runs if this is not being used as a module!
-    game_help()
-    #use_phone()
+#if __name__ == "__main__":
