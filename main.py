@@ -1,13 +1,10 @@
-import json
-import os
-import sys
+import json, os, sys
 from time import sleep
-
 import actions
 from script import script
 
 os.system('clear')
-
+ 
 # Player's inventory
 inventory = ['phone']
 
@@ -63,6 +60,10 @@ def intro():
  #  # # ###     #   # # ###
  #              ###
 ''')
+
+def introduction():
+  # if you want it. 
+  pass
 
 
 def road():
@@ -200,6 +201,7 @@ def load_game_state0():
 def navigate(exits, current_room, objects_in_room):
   """
     Navigate to other rooms or perform actions based on the available exits and objects.
+
     """
   while True:
     if len(objects_in_room) > 0:

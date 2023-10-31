@@ -14,5 +14,11 @@ My hope is that you study navigate() and some of my functions, and try to unders
 
 ## How to start
 
-To start, you need a written game description, a map, a list of all the items in your rooms, what happens when a player uses an item.
+To start, you need a written game description, a map, a list of all the items in your rooms, what happens when a player uses an item.  Follow the patterns in my code.
+
+You map should show the name of the room, the ways out (exits) and any items found in the room.  You will write each of your rooms as a function.  You can modify the rooms in the sample game to start.
+
+Script.py is where you put the detailed room descriptions.
+
+**Until you really understand what is going on, best not mess with my code.  You probably will mess things up.**
 

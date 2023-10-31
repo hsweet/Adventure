@@ -1,13 +1,15 @@
 '''All the room descriptions are here.
 
-They are all in a python dictionary
-There should be an entry for each room in your game.
-The key is the room name, and the value is the description.
-Follow the exmaple below.
+- They are all in a python dictionary
+- There should be an entry for each room in your game.
+- The rooms must actually exist in main.py
+- The key is the room name, and the value is the description
+.
+- The room name is enclosed in quotes, followed by a :
+- The description is enclosed in triple quotes and can span multiple lines.
+- \n makes a new line
 
-The room name is enclosed in quotes, followed by a :
-The description is enclosed in triple quotes and can span multiple lines.
-\n makes a new line
+Follow and modify the example below.
 '''
 
 script = {
