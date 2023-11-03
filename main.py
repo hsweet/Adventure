@@ -7,6 +7,8 @@ os.system('clear')
  
 # Player's inventory
 inventory = ['phone']
+# For saving game state to a JSON file
+file_path = os.getcwd()
 
 # Define objects
 objects = {
@@ -159,44 +161,36 @@ def print_room_description(room, objects_in_room):
   save_game_state(game_state)
 
 
-# Saving game state to a JSON file
-file_path = os.getcwd()
-
-
 # Saving game state to a JSON file in the current directory
 def save_game_state(game_state):
   #file_path = os.getcwd()
-  with open(file_path + '/game_state.json', 'w') as file:
-    json.dump(game_state, file)
-
+  try:
+    with open(file_path + '/game_state.json', 'w') as file:
+      json.dump(game_state, file)
+  except FileNotFoundError:
+    print('Can\'t find the file to save to ')
 
 # Loading game state from a JSON file in the current directory
 
 
 def load_game_state():
-  # used to load saved rooms
+  # used to load saved rooms, used by itself.
   room_functions = {
       'entry': entry,
       'kitchen': kitchen,
       'closet': closet
       # Add more room names and functions as needed
   }
-
-  with open(file_path + '/game_state.json', 'r') as file:
-    game_state = json.load(file)
-
-  game_state[0]
-  current_room = game_state[1]
-  actions.charge = game_state[2]
-  #print(f'last room is {current_room}')
-  room_functions[current_room]()
-
-
-def load_game_state0():
-  with open(file_path + '/game_state.json', 'r') as file:
-    game_state = json.load(file)
-  return game_state
-
+  try:
+    with open(file_path + '/game_state.json', 'r') as file:
+      game_state = json.load(file)
+      game_state[0]
+      current_room = game_state[1]
+      actions.charge = game_state[2]
+      room_functions[current_room]()
+  except FileNotFoundError:
+    print("No saved game state found. Starting new game...\n")
+    room_functions[current_room]()
 
 def navigate(exits, current_room, objects_in_room):
   """
@@ -278,32 +272,6 @@ def use_object(inventory, this_room):
       print(f'\nYou cannot use the {obj_to_use}.')
   else:
     print('\nYou do not have that object in your inventory.')
-
-
-def use_object0(inventory):
-  """
-    Prompts the user to use an object from their inventory.
-    Performs the corresponding action based on the selected object.
-    """
-  if not inventory:
-    print('\nYou have no objects in your inventory.')
-    return
-
-  print('\nYou have the following objects in your inventory:')
-  for obj in inventory:
-    print(f'- {obj}')
-
-  obj_to_use = input('Enter the name of the object you want to use: ')
-  if obj_to_use in inventory:
-    if 'action' in objects[obj_to_use]:
-      action = objects[obj_to_use]['action']
-      print(f'\nYou used the {obj_to_use}.')
-      action()  # Call the function reference
-    else:
-      print(f'\nYou cannot use the {obj_to_use}.')
-  else:
-    print('\nYou do not have that object in your inventory.')
-
 
 if __name__ == "__main__":
 

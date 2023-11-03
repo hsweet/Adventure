@@ -16,7 +16,11 @@ def use_phone(room_name):
   os.system('clear')
   global charge
   extension = 102
-  print(f'Phone charge is {charge}\n')  # make a battery bar display
+  print(f'Phone charge is {charge}\n')  
+  # make a battery bar display
+  for i in range(charge):
+    print(f'{i*"█"}{(charge-i)*"░"}'.center(20, ' '))
+    sleep(0.1)
   charge -= 1  # losing power
   if charge == 0:
     print('\n Game over ..')
