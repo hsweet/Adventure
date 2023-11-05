@@ -7,5 +7,5 @@ hidden = [".pythonlibs"]
 channel = "stable-23_05"
 
 [deployment]
-run = ["python3", "main.py"]
+run = ["python3", "main.py, intro.py"]
 deploymentTarget = "cloudrun"

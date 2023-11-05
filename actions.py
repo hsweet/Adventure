@@ -6,6 +6,7 @@ from time import sleep
 # global variables
 charge = 10  # phone is fully charged
 cell_signal = 10
+#used_objects = []  # list of objects used 
 
 os.system('clear')
 
@@ -68,6 +69,7 @@ def unlock_door(room_name):
     print(f'\nThe safe is unlocked in {room_name}!')
     print(
         '''You hear a click. The door swings open. You can see a table with a bunch of papers on it.''')
+     
    
 
 

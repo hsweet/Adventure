@@ -1,10 +1,14 @@
 ## Instructions
 
-You will work together with a partner to build a text adventure game. [Wikipedia article](https://en.wikipedia.org/wiki/Text-based_game)
+You will work together with a partner to build a text adventure game. 
+
+[Wikipedia article](https://en.wikipedia.org/wiki/Text-based_game)
+
+[A student game](https://replit.com/@awam/MountainTop-or-AI-Adventure-Game?v=1)
 
 Text games were very popular back in the day.  The day being fancy computer graphics, good sound, and now VR.
 
-But they still have a lot of the basic elements of a good game.  You make the graphics in your mind.  Kind of like the difference between a book and a movie based on a book.
+But they still have a lot of the basic elements of a good game.  You tmake the graphics in your mind.  Kind of like the difference between a book and a movie based on a book.
 
 I think this a great project for a beginning programmer.  There are more than enough things to learn working on a game like this, all of which you would need to know to go further. 
 
@@ -16,23 +20,24 @@ My hope is that you study navigate() and some of my functions, and try to unders
 
 To start, you need a written game description, a map, a list of all the items in your rooms, what happens when a player uses an item.  Follow the patterns in my code.
 
+![Game Map](assets/map.jpg)
+
 You map should show the name of the room, the ways out (exits) and any items found in the room.  You will write each of your rooms as a function.  You can modify the rooms in the sample game to start.
 
-**Until you really understand what is going on, best not mess with my code.**
-
-You can also add your own functions to the game.
+You can also add your own functions to the game.  For example you might write a goto_random_room() function.
 
 ## Files
 
-I decided to break up this large program into several files.
+I decided to break up this large program into several files.  This makes it easier to debug and less confusing.  
 
 |File|Function|
 |---|---|
 |main.py|object list, room function and general functions| 
 |intro.py|experimental splash screen using Python curses|
-|actions.py|functions when using objects|
+|actions.py|functions for using objects|
 |script.py|all the room descriptions|
-|game_state.json|automatic game saves|
+|game_state.json|games are saved to this file as you play|
+|vocab.py|code to improve game's vocabulary|
 
 ## Coding..
 
@@ -81,24 +86,26 @@ This is the line in main.py to change`game_state = [inventory, room, actions.cha
 You have to write all the functions in actions.py.  Those control what happens whenever you use an object. 
 
 You need to modify all the things in the table that have a *.
+Warning!  Don't mess with the other functions thoughtlessy 
 
 |Type|Name|Purpose|
 |---|---|---|
 |list|inventory|a global list of things you have|
-|dict|* objects|all the objects in the game |
-|fun|* intro|a curses spash screen |
-|fun|* introduction|game starts here|
-|fun|* road|room function|
-|fun|* kitchen|room function|
-|fun|* entry|room function |
-|fun|* closet|room function |
-|fun|* finish|room function |
-|dict|* room_funtions|room name:action|
-|fun|typewrite|fancy text|
-|fun|print_room_description| |
-|fun|save_game_state| |
-|fun|load_game_state| |
-|fun|navigate| |
-|fun|take_object| |
-|fun|use_object| |
+|dictionary|* objects|all the objects in the game |
+|function* intro|a curses spash screen |
+|function|* introduction|game starts here|
+|function|* road|room function|
+|function|* kitchen|room function|
+|function|* entry|room function |
+|function|* closet|room function |
+|function|* finish|room function |
+|dictionary|* room_funtions|room name:action|
+|function|typewrite|fancy text|
+|function|visited|how many vists to each room|
+|function|print_room_description| |
+|function|save_game_state| |
+|function|load_game_state| |
+|function|navigate| |
+|function|take_object| |
+|function|use_object| |
 
