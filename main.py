@@ -14,7 +14,8 @@ inventory = ['phone']
 file_path = os.getcwd()
 # rooms visited 'room_name':how many times
 
-visited_rooms = {}  
+visited_rooms = {}   
+
 
 # Define objects
 objects = {
@@ -122,7 +123,6 @@ def secret_room():
   destination()
 
 
-
 def finish():
   print(dialog['finish'])
   sleep(2)
@@ -134,19 +134,7 @@ def finish():
  #              ###
 ''')
 
-
-################################################# General Functions #################
-'''
-room_functions = {
-  #  place after room functions: called by load ???
-    'entry': entry,
-    'kitchen': kitchen,
-    'closet': closet,
-    'secret_room': secret_room
-
-    # Add more room names and functions as needed
-}
-'''
+################### General Functions #################
 
 def visited(room):
   ''' 
@@ -157,8 +145,8 @@ def visited(room):
   else:
     visited_rooms[room] = 1
   return visited_rooms[room]
-   
-    
+
+
 def typewrite(message):
   '''from https://www.youtube.com/watch?v=2h8e0tXHfk0'''
   for char in message:
@@ -168,27 +156,29 @@ def typewrite(message):
       sleep(0.05)
     else:
       sleep(1)
+      
 
-
+# add a flag parameter to replay description from a look command
 def print_room_description(room, objects_in_room):
   """
     Prints the description and objects in the current room and saves the state of the game.
-
-    Args:
     """
   os.system('clear')
-  visited(room)
+  vst = visited(room)
   # decorate room name
   l = len(room) + 15
   print('*' * l)
   print(f'* You are in {room} *')
-  print(f'You have been here {visited(room)} times.')
+  print(f'You have been here {vst} times.')
   print('*' * l + '\n')
-  i = ", ".join(inventory)
-  print(f'You have {i}\n')
-  for obj in objects_in_room:
-    print(f'- There is a {objects[obj]["description"]}')
-  typewrite(script[room])
+  # prints long description only on first visit
+  # be good to add a look command if you want that again
+  if visited_rooms[room] < 2:   
+    i = ", ".join(inventory)
+    print(f'You have {i}\n')
+    for obj in objects_in_room:
+      print(f'- There is a {objects[obj]["description"]}')
+    typewrite(script[room])
   print('\n'+'*' * 60)
   game_state = [inventory, room, actions.charge, visited_rooms]
   save_game_state(game_state)
@@ -225,6 +215,7 @@ def load_game_state():
     print("No saved game state found. Starting new game...\n")
     room_functions[current_room]()
 
+
 def navigate(exits, current_room, objects_in_room):
   """
     Navigate to other rooms or perform actions based on the available exits and objects.
@@ -237,7 +228,7 @@ def navigate(exits, current_room, objects_in_room):
         print(f'- {obj}')
 
     print(
-        '\nCommands: n(orth), e(ast), s(outh), w(est), t(ake), u(se), i(nventory), h(elp) q(uit) '
+        '\nCommands:   ************* \n\nn(orth), e(ast), s(outh), w(est), \n\nt(ake), u(se), i(nventory), h(elp), \n\nl(ook), q(uit) '
     )
     choice = input('\nWhat do you want to do? .. ')
     if choice:
@@ -257,7 +248,7 @@ def navigate(exits, current_room, objects_in_room):
       print(f'\nYou have {i}\n')
       continue
     elif choice == 'h':
-      actions.game_help()
+      actions.game_help(current_room)
       continue
     elif choice == 'q':
       os.system('clear')
@@ -309,7 +300,6 @@ def use_object(inventory, this_room):
       print(f'\nYou cannot use the {obj_to_use}.')
   else:
     print('\nYou do not have that object in your inventory.')
-
 if __name__ == "__main__":
 
   # used to load saved rooms

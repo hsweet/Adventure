@@ -70,8 +70,7 @@ def unlock_door(room_name):
     print(
         '''You hear a click. The door swings open. You can see a table with a bunch of papers on it.''')
      
-   
-
+  
 
 def read_note(room_name):
   # add the ability to use phones light to read
