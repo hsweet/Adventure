@@ -71,7 +71,6 @@ def unlock_door(room_name):
         '''You hear a click. The door swings open. You can see a table with a bunch of papers on it.''')
      
   
-
 def read_note(room_name):
   # add the ability to use phones light to read
   print(
@@ -79,6 +78,8 @@ def read_note(room_name):
 It reads: "Call us at 555-0110 for fast pizza delivery.  There is a second number scribbled in pencil..   It looks like B.R.S. 555-0220.\n\n'''
   )
 
+def secret_room(room_name):
+  print ('secret room function')
 
 def game_help(room_name):
   os.system('clear')
