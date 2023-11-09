@@ -1,8 +1,8 @@
 import actions
 import os
 import json
-from rooms import *
-from script import script
+import rooms
+from script import *
 import sys
 from time import sleep
 
@@ -10,36 +10,6 @@ from time import sleep
 inventory = ['phone']
 visited_rooms = {}  
 file_path = os.getcwd()
-
-# Define objects
-objects = {
-    'phone': {
-        'description': 'a regular cell phone',
-        'usable': True,
-        'action': actions.use_phone
-    },
-    'key': {
-        'description': 'a small key',
-        'usable': True,
-        'action': actions.unlock_door
-    },
-    'book': {
-        'description': 'an old book',
-        'usable': False
-    },
-    'note': {
-        'description':
-        'a crumpled piece of paper with the number 102 barely visible',
-        'usable': False
-    },
-    'door': {
-        'description': 'a small door',
-        'usable': True,
-        'action': actions.read_note
-    }
-
-    # Add more objects as needed or add a note function to make user solve a puzzle to get the message
-}
 
 
 ########### General Functions #################
@@ -76,7 +46,6 @@ def print_room_description(room, objects_in_room):
   # decorate room name
   l = len(room) + 15
   print('*' * l)
-  print('This message is from play.py')
   print(f'* You are in {room} *')
   print(f'You have been here {vst} times.')
   print('*' * l + '\n')
@@ -101,14 +70,15 @@ def save_game_state(game_state):
       json.dump(game_state, file)
   except FileNotFoundError:
     print('Can\'t find the file to save to ')
-
+'''
 # Loading game state from a JSON file in the current directory
-
+# room_functions is requiring a circular import.
 def load_game_state():
   room_functions = {
-      'entry': entry,
-      'kitchen': kitchen,
-      'closet': closet
+      'entry': rooms.entry,
+      'kitchen': rooms.kitchen,
+      'closet': rooms.closet,
+      'secret_room':rooms.secret_room
       # Add more room names and functions as needed
   }
   try:
@@ -146,7 +116,7 @@ def load_game_state0():
   except FileNotFoundError:
     print("No saved game state found. Starting new game...\n")
     room_functions[current_room]()
-
+'''
 
 def navigate(exits, current_room, objects_in_room):
   """
@@ -227,7 +197,7 @@ def use_object(inventory, this_room):
       action(this_room)  # Pass the room name argument to the function
       # one possible way to impliment special action for a particular room 
       if this_room == "closet":
-        actions.secret_room()
+        actions.secret_room(this_room)
     else:
       print(f'\nYou cannot use the {obj_to_use}.')
   else:

@@ -1,57 +1,50 @@
-import actions
-import json
-import os
-from script import script
-#from rooms import *
+import intro
+import file_fun
 import rooms
-import sys
-from time import sleep
-# import vocab
+import play
+import os
+
 
 os.system('clear')
-file_path = os.getcwd()
+'''
+This file just starts the game. 
 
-################### General Functions #################
+- The play module contains functions to run the game, such as move around, get descriptions, pick up and use things.
 
-# Saving game state to a JSON file in the current directory
-def save_game_state(game_state):
-  #file_path = os.getcwd()
-  try:
-    with open(file_path + '/game_state.json', 'w') as file:
-      json.dump(game_state, file)
-  except FileNotFoundError:
-    print('Can\'t find the file to save to ')
+- All the room functions are in rooms.py.  
 
-# Loading game state from a JSON file in the current directory
+- actions.py has all the functions that are called to use objects in your inventory Everything in the game that does something has a function.
 
-def load_game_state():
-  # used to load saved rooms, used by itself.
-  room_functions = {
-      'entry': rooms.entry,
-      'kitchen': rooms.kitchen,
-      'closet': rooms.closet
-      # Add more room names and functions as needed
-  }
-  try:
-    with open(file_path + '/game_state.json', 'r') as file:
-      game_state = json.load(file)
-      game_state[0]
-      current_room = game_state[1]
-      actions.charge = game_state[2]
-      room_functions[current_room]()
-  except FileNotFoundError:
-    print("No saved game state found. Starting new game...\n")
-    room_functions[current_room]()
+- script.py has the script and object list as python dictionarys.
 
-    os.system('clear')
-    print("\nInvalid command. Try again.\n")
+- vocab.py contains vocabulary for the game. It is not being used yet
 
-
-
-if __name__ == "__main__":
-
-  # used to load saved rooms
-  if input('Load saved game? (y/n) ').lower() == 'y':
-    load_game_state()
+''' 
+def intro():
+  play.typewrite('''\nYour car has broken down on a dark, rainy night.
+\nYou can see a light from an old mansion behind an iron gate thru the woods'''
+        )
+  ans = input('\nWalk to house? y/n..')
+  ans = ans[0].lower()  # clean up input
+  if ans == 'y':
+    rooms.entry()
   else:
-    rooms.intro()
+    typewrite(
+        '''\nYou chose to stay in your car.  The wind gets stronger and stronger.  There is no cell signal. You wait.
+\n\nA large tree falls on your car''')
+    sleep(1)
+    os.system('clear')
+    print('''
+### #           ###       #
+ #  ### ###     #   ##  ###
+ #  # # ##      ##  # # # #
+ #  # # ###     #   # # ###
+ #              ###
+''')
+if __name__ == "__main__":
+  #intro.wrapper(intro.center, "Birch Rescue Squad")  # Use your title
+
+  if input('Load saved game? (y/n) ').lower() == 'y':
+    file_fun.load_game_state()    # load last game 
+  else:
+    intro()    # start a new game

@@ -1,6 +1,7 @@
 import curses
+from curses.textpad import rectangle
 from curses import wrapper
-from curses.textpad import Textbox, rectangle
+
 
 #https://docs.python.org/3/howto/curses.html
 
@@ -30,5 +31,4 @@ def center(screen, message):
   screen.getkey()  # wait for a keypress
 
 if __name__ == '__main__':
-  
   wrapper(center, "Birch Rescue Squad")

@@ -5,11 +5,10 @@ from time import sleep
 
 # global variables
 charge = 10  # phone is fully charged
+
 cell_signal = 10
 #used_objects = []  # list of objects used 
-
 os.system('clear')
-
 
 def use_phone(room_name):
   # add code to drain battery each time used
@@ -61,6 +60,9 @@ def ring(times):
     print("Ring", end=", ")
     sleep(1)
 
+def read_book(room_name):
+  print ('Look\'s like it is written in Chinese.  You don\'t understand it.')
+  
 
 def unlock_door(room_name):
   if room_name == 'closet':

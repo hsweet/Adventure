@@ -10,6 +10,7 @@ actions = "^1.0.3"
 rapid-router = "^5.15.5"
 replit-play = "^0.0.23"
 tools = "^0.1.9"
+ghhu = "^0.1"
 
 [tool.pyright]
 # https://github.com/microsoft/pyright/blob/main/docs/configuration.md

@@ -1,16 +1,51 @@
-'''All the room descriptions are here.
+import actions
+
+'''All the room descriptions and game objects are here.
 
 - They are all in a python dictionary
-- There should be an entry for each room in your game.
-- The rooms must actually exist in main.py
+- There should be an entry for each room and object in your game.
+- Each room is a function in rooms.py
+
+For the script:
 - The key is the room name, and the value is the description
-.
 - The room name is enclosed in quotes, followed by a :
 - The description is enclosed in triple quotes and can span multiple lines.
 - \n makes a new line
 
-Follow and modify the example below.
+Follow and modify the examples below.
 '''
+# Define objects
+objects = {
+    'phone': {
+        'description': 'a regular cell phone',
+        'usable': True,
+        'action': actions.use_phone
+    },
+    'key': {
+        'description': 'a small key',
+        'usable': True,
+        'action': actions.unlock_door
+    },
+    'book': {
+        'description': 'an old book',
+        'usable': True,
+        'action':actions.read_book
+        
+    },
+    'note': {
+        'description':
+        'a crumpled piece of paper with the number 102 barely visible',
+        'usable': False
+    },
+    'door': {
+        'description': 'a small door',
+        'usable': True,
+        'action': actions.read_note
+    }
+
+    # Add more objects as needed  
+}
+
 
 script = {
     'entry': '''\nThe door squeaks shut behind you.. \n\nIt is quite hard to see\n\n A small bat whizzes by your head''',

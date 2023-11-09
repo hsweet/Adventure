@@ -1,36 +1,10 @@
  
-from play import *
+#from play import *
+from play import inventory,print_room_description, navigate
 
- 
 #########################  Rooms ########################
 
-def intro():
-  typewrite('''\nYour car has broken down on a dark, rainy night.
-\nYou can see a light from an old mansion behind an iron gate thru the woods'''
-        )
-  ans = input('\nWalk to house? y/n..')
-  ans = ans[0].lower()  # clean up input
-  if ans == 'y':
-    entry()
-  else:
-    typewrite(
-        '''\nYou chose to stay in your car.  The wind gets stronger and stronger.  There is no cell signal. You wait.
-\n\nA large tree falls on your car''')
-    sleep(1)
-    os.system('clear')
-    print('''
-### #           ###       #
- #  ### ###     #   ##  ###
- #  # # ##      ##  # # # #
- #  # # ###     #   # # ###
- #              ###
-''')
-
-def introduction():
-  # if you want it. 
-  pass
-
-
+ 
 def road():
   this_room = 'road'
   exits = {'e': entry}
