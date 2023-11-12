@@ -1,14 +1,26 @@
 import os
 from random import randint
 from time import sleep
-'''Put all action functions here. def room(room_name) the parameter is required even if the function does not use it'''
+
 
 # global variables
 charge = 10  # phone is fully charged
-
 cell_signal = 10
-#used_objects = []  # list of objects used 
+inventory = ['phone']
+
+
 os.system('clear')
+
+def update_inventory(new_inventory):
+    global inventory
+    for item in new_inventory:
+        if item not in inventory:
+            inventory.append(item)
+
+
+####################################################################################################
+#          Put all action functions here. def room(room_name) the parameter is required            #
+####################################################################################################
 
 def use_phone(room_name):
   # add code to drain battery each time used
@@ -16,11 +28,13 @@ def use_phone(room_name):
   os.system('clear')
   global charge
   extension = 102
-  print(f'Phone charge is {charge}\n')  
+  print(f'Phone charge is {charge}\n')
+
   # make a battery bar display
   for i in range(charge):
     print(f'{i*"█"}{(charge-i)*"░"}'.center(20, ' '))
     sleep(0.1)
+
   charge -= 1  # losing power
   if charge == 0:
     print('\n Game over ..')
@@ -62,7 +76,7 @@ def ring(times):
 
 def read_book(room_name):
   print ('Look\'s like it is written in Chinese.  You don\'t understand it.')
-  
+
 
 def unlock_door(room_name):
   if room_name == 'closet':
@@ -71,8 +85,8 @@ def unlock_door(room_name):
     print(f'\nThe safe is unlocked in {room_name}!')
     print(
         '''You hear a click. The door swings open. You can see a table with a bunch of papers on it.''')
-     
-  
+
+
 def read_note(room_name):
   # add the ability to use phones light to read
   print(
@@ -90,4 +104,6 @@ def game_help(room_name):
   ''')
 
 
-#if __name__ == "__main__":
+if __name__ == "__main__":
+
+  print(inventory)

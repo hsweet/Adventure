@@ -1,21 +1,22 @@
 import actions
 import os
 import json
-import rooms
+# import rooms
 from script import *
 import sys
 from time import sleep
 
 
-inventory = ['phone']
-visited_rooms = {}  
+inventory = actions.inventory
+#inventory =['phone']
+visited_rooms = {}
 file_path = os.getcwd()
 
 
 ########### General Functions #################
 
 def visited(room):
-  ''' 
+  '''
   How many times has room been visited?
   '''
   if room in visited_rooms:
@@ -51,7 +52,7 @@ def print_room_description(room, objects_in_room):
   print('*' * l + '\n')
   # prints long description only on first visit
   # be good to add a look command if you want that again
-  if visited_rooms[room] < 2:   
+  if visited_rooms[room] < 2:
     i = ", ".join(inventory)
     print(f'You have {i}\n')
     for obj in objects_in_room:
@@ -195,7 +196,7 @@ def use_object(inventory, this_room):
       print(f'\nYou used the {obj_to_use}.')
       os.system('clear')
       action(this_room)  # Pass the room name argument to the function
-      # one possible way to impliment special action for a particular room 
+      # one possible way to impliment special action for a particular room
       if this_room == "closet":
         actions.secret_room(this_room)
     else:
