@@ -31,7 +31,7 @@ def intro():
     rooms.entry()
   else:
     play.typewrite(
-        '''\nYou chose to stay in your car.  The wind gets stronger and stronger.  There is no cell signal. You wait.
+       '''\nYou chose to stay in your car.  The wind gets stronger and stronger.  There is no cell signal. You wait.
 \n\nA large tree falls on your car''')
     sleep(1)
     os.system('clear')

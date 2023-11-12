@@ -8,14 +8,13 @@ from time import sleep
 
 
 inventory = actions.inventory
-#inventory =['phone']
-visited_rooms = {}
+visited_rooms = actions.visited_rooms
 file_path = os.getcwd()
 
 
 ########### General Functions #################
 
-def visited(room):
+def previously_visited(room):
   '''
   How many times has room been visited?
   '''
@@ -37,21 +36,23 @@ def typewrite(message):
       sleep(1)
 
 
-# add a flag parameter to replay description from a look command
-def print_room_description(room, objects_in_room):
+def print_room_description(room, objects_in_room, increment = True):
   """
     Prints the description and objects in the current room and saves the state of the game.
     """
   os.system('clear')
-  vst = visited(room)
-  # decorate room name
-  l = len(room) + 15
-  print('*' * l)
   print(f'* You are in {room} *')
-  print(f'You have been here {vst} times.')
-  print('*' * l + '\n')
+  if increment == True:
+    visits = previously_visited(room)  # increment visit
+    # decorate room name
+    l = len(room) + 15
+    print('*' * l)
+    print(f'You have been here {visits} times.')
+    print('*' * l + '\n')
+  else:
+    typewrite(script[room])
+
   # prints long description only on first visit
-  # be good to add a look command if you want that again
   if visited_rooms[room] < 2:
     i = ", ".join(inventory)
     print(f'You have {i}\n')
@@ -131,15 +132,18 @@ def navigate(exits, current_room, objects_in_room):
         print(f'- {obj}')
 
     print(
-        '\nCommands:   ************* \n\nn(orth), e(ast), s(outh), w(est), \n\nt(ake), u(se), i(nventory), h(elp), \n\nl(ook), q(uit) '
+        '\nCommands: \n\nn(orth), e(ast), s(outh), w(est), t(ake), u(se), i(nventory), h(elp), l(ook), q(uit) '
     )
     choice = input('\nWhat do you want to do? .. ')
     if choice:
       choice = choice[0].lower()  #  cleans input ==> first letter, lower case
+    # print (f'Choice is {choice}')
 
     if choice in exits:  # is this a valid exit?
       os.system('clear')
       return choice, exits[choice]
+
+    # other commands
     elif choice == 't':
       take_object(objects_in_room, current_room)
       continue
@@ -152,6 +156,10 @@ def navigate(exits, current_room, objects_in_room):
       continue
     elif choice == 'h':
       actions.game_help(current_room)
+      continue
+    elif choice == 'l':
+      print ("Looking")
+      print_room_description(current_room, objects_in_room, increment=False)
       continue
     elif choice == 'q':
       os.system('clear')

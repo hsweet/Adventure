@@ -1,10 +1,11 @@
- 
+
 #from play import *
 from play import inventory,print_room_description, navigate
+from time import sleep
 
 #########################  Rooms ########################
 
- 
+
 def road():
   this_room = 'road'
   exits = {'e': entry}
@@ -46,7 +47,7 @@ def closet():
 def secret_room():
   '''This is accessed when the user unlocks the door  '''''
   this_room = 'secret_room'
-  exits = {'n': kitchen} 
+  exits = {'n': kitchen}
   objects_in_room = []
   print_room_description(this_room, objects_in_room)
   key, destination = navigate(exits, this_room, objects_in_room)
@@ -54,7 +55,7 @@ def secret_room():
 
 
 def finish():
-  print(dialog['finish'])
+  #print(dialog['finish'])  # in script figure it out later.
   sleep(2)
   print('''
 ### #           ###       #

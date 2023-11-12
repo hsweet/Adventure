@@ -7,19 +7,24 @@ from time import sleep
 charge = 10  # phone is fully charged
 cell_signal = 10
 inventory = ['phone']
+visited_rooms = {}
 
-
-os.system('clear')
-
+# these 2 functions are for setting up a saved game
 def update_inventory(new_inventory):
     global inventory
     for item in new_inventory:
         if item not in inventory:
             inventory.append(item)
 
+def update_visited_rooms(new_rooms):
+    global visited_rooms
+    visited_rooms.update(new_rooms)
+
+os.system('clear')
+
 
 ####################################################################################################
-#          Put all action functions here. def room(room_name) the parameter is required            #
+#      Put all action functions below. def your_room(room_name) the parameter is required          #
 ####################################################################################################
 
 def use_phone(room_name):

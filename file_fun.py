@@ -30,36 +30,23 @@ def load_game_state():
         print("No saved game state found. Starting new game...\n")
         room_functions['entry']()
         return
+
+      # load and parse saved game
       game_state = json.loads(file_contents)
       inventory = game_state[0]
       actions.update_inventory(inventory)
       current_room = game_state[1]
       actions.charge = game_state[2]
+      previous_visits = game_state[3]
+      actions.update_visited_rooms(previous_visits)
+
+      # go to saved room
       room_functions[current_room]()
+
   except FileNotFoundError:
     print("No saved game state found. Starting new game...\n")
     room_functions['entry']()
 
-
-def load_game_state0():
-  # used to load saved rooms, used by itself.
-  room_functions = {
-      'entry': rooms.entry,
-      'kitchen': rooms.kitchen,
-      'closet': rooms.closet
-      # Add more room names and functions as needed
-  }
-  try:
-    with open(file_path + '/game_state.json', 'r') as file:
-      game_state = json.load(file)
-      print (game_state[0])
-      actions.inventory = game_state[0]   # this ends the game somehow.
-      current_room = game_state[1]
-      actions.charge = game_state[2]
-      room_functions[current_room]()
-  except FileNotFoundError:
-    print("No saved game state found. Starting new game...\n")
-    room_functions[current_room]()
 
 if __name__ == '__main__':
   load_game_state()

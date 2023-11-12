@@ -30,7 +30,7 @@ objects = {
         'description': 'an old book',
         'usable': True,
         'action':actions.read_book
-        
+
     },
     'note': {
         'description':
@@ -43,7 +43,7 @@ objects = {
         'action': actions.read_note
     }
 
-    # Add more objects as needed  
+    # Add more objects as needed
 }
 
 
@@ -53,5 +53,5 @@ script = {
     'closet': '''\nYou push some clothes out of the way to uncover a small door''',
     'road': '''It is raining heavily and your car has blown a tire..\n\n You see the light from an old house to the east ''',
     'finish': '''You walk past your flattened Tesla and wearily thumb a ride back to the nearest town\n\n''',
-'secret_room':'The only thing here is a mouse trapped in a cage..\n\n'
+    'secret_room':'The only thing here is a mouse trapped in a cage..\n\n'
 }
