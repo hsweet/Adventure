@@ -2,14 +2,17 @@ import os
 from random import randint
 from time import sleep
 
-
+####################################################################################################
+#                                        Leave as is!                                              #
+####################################################################################################
 # global variables
 charge = 10  # phone is fully charged
 cell_signal = 10
 inventory = ['phone']
 visited_rooms = {}
 
-# these 2 functions are for setting up a saved game
+# these 2 functions restore
+#  a saved game
 def update_inventory(new_inventory):
     global inventory
     for item in new_inventory:

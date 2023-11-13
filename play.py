@@ -1,7 +1,7 @@
 import actions
 import os
 import json
-# import rooms
+import rooms
 from script import *
 import sys
 from time import sleep
@@ -41,25 +41,26 @@ def print_room_description(room, objects_in_room, increment = True):
     Prints the description and objects in the current room and saves the state of the game.
     """
   os.system('clear')
-  print(f'* You are in {room} *')
+  print(f'> You are in {room}\n ')
   if increment == True:
-    visits = previously_visited(room)  # increment visit
+    visits = previously_visited(room)  # increment visit count
     # decorate room name
     l = len(room) + 15
-    print('*' * l)
-    print(f'You have been here {visits} times.')
-    print('*' * l + '\n')
+    #print('*' * l)
+    print(f'> You have been here {visits} times.\n')
+    #print('*' * l + '\n')
   else:
+    os.system('clear')
     typewrite(script[room])
 
   # prints long description only on first visit
   if visited_rooms[room] < 2:
     i = ", ".join(inventory)
-    print(f'You have {i}\n')
+    print(f'> You have {i}\n')
     for obj in objects_in_room:
-      print(f'- There is a {objects[obj]["description"]}')
+      print(f'> There is a {objects[obj]["description"]}')
     typewrite(script[room])
-  print('\n'+'*' * 60)
+  print('\n'+'_' * 30)
   game_state = [inventory, room, actions.charge, visited_rooms]
   save_game_state(game_state)
 
@@ -127,14 +128,14 @@ def navigate(exits, current_room, objects_in_room):
     """
   while True:
     if len(objects_in_room) > 0:
-      print('\nYou see the following objects:')
+      print('\n> You see the following objects:\n')
       for obj in objects_in_room:
         print(f'- {obj}')
 
     print(
-        '\nCommands: \n\nn(orth), e(ast), s(outh), w(est), t(ake), u(se), i(nventory), h(elp), l(ook), q(uit) '
+        '\n> Commands: \n\n> n(orth), e(ast), s(outh), w(est), t(ake), u(se), i(nventory), h(elp), l(ook), q(uit) '
     )
-    choice = input('\nWhat do you want to do? .. ')
+    choice = input('\n> What do you want to do? .. ')
     if choice:
       choice = choice[0].lower()  #  cleans input ==> first letter, lower case
     # print (f'Choice is {choice}')
@@ -174,14 +175,14 @@ def take_object(objects_in_room, current_room):
     Prompts the user to take an object from the room.
     Adds the object to the inventory if it exists in the room.
     """
-  obj_to_take = input('\nWhat do you want to take: ')
+  obj_to_take = input('\n> What do you want to take: ')
   if obj_to_take in objects_in_room:
     objects_in_room.remove(obj_to_take)
     inventory.append(obj_to_take)
     print(f'\nYou took the {obj_to_take}')
     os.system('clear')
   else:
-    typewrite('\nThat object is not in the room.')
+    typewrite('\n> That object is not in the room.')
 
 
 def use_object(inventory, this_room):
@@ -190,10 +191,10 @@ def use_object(inventory, this_room):
     Performs the corresponding action based on the selected object.
     """
   if not inventory:
-    print('\nYou have no objects in your inventory.')
+    print('\n> You have no objects in your inventory.')
     return
 
-  print('\nYou have the following objects in your inventory:')
+  print('\n> You have the following objects in your inventory:')
   for obj in inventory:
     print(f'- {obj}')
 
@@ -208,6 +209,39 @@ def use_object(inventory, this_room):
       if this_room == "closet":
         actions.secret_room(this_room)
     else:
-      print(f'\nYou cannot use the {obj_to_use}.')
+      print(f'\n> You cannot use the {obj_to_use}.')
   else:
-    print('\nYou do not have that object in your inventory.')
+    print('\n> You do not have that object in your inventory.')
+
+
+def load_game_state():
+  room_functions = {
+      'entry': rooms.entry,
+      'kitchen': rooms.kitchen,
+      'closet': rooms.closet,
+      'secret_room':rooms.secret_room
+      # Add more room names and functions as needed
+  }
+  try:
+    with open(file_path + '/game_state.json', 'r') as file:
+      file_contents = file.read()
+      if not file_contents:  # Check if the file is empty
+        print("No saved game state found. Starting new game...\n")
+        room_functions['entry']()
+        return
+
+      # load and parse saved game
+      game_state = json.loads(file_contents)
+      inventory = game_state[0]
+      actions.update_inventory(inventory)
+      current_room = game_state[1]
+      actions.charge = game_state[2]
+      previous_visits = game_state[3]
+      actions.update_visited_rooms(previous_visits)
+
+      # go to saved room
+      room_functions[current_room]()
+
+  except FileNotFoundError:
+    print("No saved game state found. Starting new game...\n")
+    room_functions['entry']()
