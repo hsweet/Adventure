@@ -1,5 +1,4 @@
 import intro
-import file_fun
 import rooms
 import play
 from time import sleep
@@ -23,11 +22,11 @@ This file just starts the game.
 '''
 def intro():
   play.typewrite('''\nYour car has broken down on a dark, rainy night.
-\nYou can see a light from an old mansion behind an iron gate thru the woods'''
+\nYou can see a light from an old mansion behind an iron gate thru the woods\n'''
         )
-  ans = input('\nWalk to house? y/n..')
-  ans = ans[0].lower()  # clean up input
-  if ans == 'y':
+  answer = input('\nWalk to house? y/n..')
+  answer = answer[0].lower()  # clean up input
+  if answer == 'y':
     rooms.entry()
   else:
     play.typewrite(
@@ -39,13 +38,14 @@ def intro():
 ### #           ###       #
  #  ### ###     #   ##  ###
  #  # # ##      ##  # # # #
- #  # # ###     #   # # ###
+ #  # # ###     #
+ #  # # ###
  #              ###
 ''')
 if __name__ == "__main__":
   #intro.wrapper(intro.center, "Birch Rescue Squad")  # Use your title
 
   if input('Load saved game? (y/n) ').lower() == 'y':
-    file_fun.load_game_state()    # load last game
+    play.load_game_state()    # load last game
   else:
     intro()    # start a new game
