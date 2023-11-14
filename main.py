@@ -13,6 +13,8 @@ Start a new game or load previous.
 
 '''
 def intro():
+  '''Start a new game'''
+
   play.typewrite('''\nYour car has broken down on a dark, rainy night.
 \nYou can see a light from an old mansion behind an iron gate thru the woods\n'''
         )
@@ -66,13 +68,19 @@ def load_game_state():
       room_functions[current_room]()
 
   except FileNotFoundError:
-    print("No saved game state found. Starting new game...\n")
-    room_functions['entry']()
+    # starting a new game will create or fix the JSON file
+    print("Can't find a saved game. Starting new game...\n")
+    intro()
+  except json.JSONDecodeError as e:
+    print(f"Error: JSON decoding failed. Starting new game...\n {e}")
+    intro()
+  except Exception as e:
+    print(f"An unexpected error occurred: Starting new game...\n{e}")
+    intro()
 
 
 if __name__ == "__main__":
   #intro.wrapper(intro.center, "Birch Rescue Squad")  # Use your title
-
   if input('Load saved game? (y/n) ').lower() == 'y':
     load_game_state()    # load last game
   else:

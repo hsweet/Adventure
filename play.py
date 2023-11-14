@@ -35,7 +35,7 @@ def typewrite(message):
       sleep(1)
 
 
-def print_room_description(room, objects_in_room, increment = True):
+def describe_room(room, objects_in_room, increment = True):
   """
     Prints the description and objects in the current room and saves the state of the game.
     """
@@ -113,7 +113,7 @@ def navigate(exits, current_room, objects_in_room):
       continue
     elif choice == 'l':
       print ("Looking")
-      print_room_description(current_room, objects_in_room, increment=False)
+      describe_room(current_room, objects_in_room, increment=False)
       continue
     elif choice == 'q':
       os.system('clear')
