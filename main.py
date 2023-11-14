@@ -1,23 +1,15 @@
+import actions
 import intro
-import rooms
-import play
-from time import sleep
+import json
 import os
+import play
+import rooms
+from time import sleep
 
-
+file_path = os.getcwd()
 os.system('clear')
 '''
-This file just starts the game.
-
-- The play module contains functions to run the game, such as move around, get descriptions, pick up and use things.
-
-- All the room functions are in rooms.py.
-
-- actions.py has all the functions that are called to use objects in your inventory Everything in the game that does something has a function.
-
-- script.py has the script and object list as python dictionarys.
-
-- vocab.py contains vocabulary for the game. It is not being used yet
+Start a new game or load previous.
 
 '''
 def intro():
@@ -42,10 +34,46 @@ def intro():
  #  # # ###
  #              ###
 ''')
+
+def load_game_state():
+  # loads last game
+
+  room_functions = {
+      'entry': rooms.entry,
+      'kitchen': rooms.kitchen,
+      'closet': rooms.closet,
+      'secret_room':rooms.secret_room
+      # Add more room names and functions as needed
+  }
+  try:
+    with open(file_path + '/game_state.json', 'r') as file:
+      file_contents = file.read()
+      if not file_contents:  # Check if the file is empty
+        print("No saved game state found. Starting new game...\n")
+        room_functions['entry']()
+        return
+
+      # load and parse saved game
+      game_state = json.loads(file_contents)
+      inventory = game_state[0]
+      actions.update_inventory(inventory)
+      current_room = game_state[1]
+      actions.charge = game_state[2]
+      previous_visits = game_state[3]
+      actions.update_visited_rooms(previous_visits)
+
+      # go to saved room
+      room_functions[current_room]()
+
+  except FileNotFoundError:
+    print("No saved game state found. Starting new game...\n")
+    room_functions['entry']()
+
+
 if __name__ == "__main__":
   #intro.wrapper(intro.center, "Birch Rescue Squad")  # Use your title
 
   if input('Load saved game? (y/n) ').lower() == 'y':
-    play.load_game_state()    # load last game
+    load_game_state()    # load last game
   else:
     intro()    # start a new game

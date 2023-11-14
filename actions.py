@@ -6,7 +6,7 @@ from time import sleep
 #                                        Leave as is!                                              #
 ####################################################################################################
 # global variables
-charge = 10  # phone is fully charged
+charge = 10  # phone starts fully charged
 cell_signal = 10
 inventory = ['phone']
 visited_rooms = {}
@@ -30,31 +30,32 @@ os.system('clear')
 #      Put all action functions below. def your_room(room_name) the parameter is required          #
 ####################################################################################################
 
-def use_phone(room_name):
+def use_phone(room_name, answer = 4):  # remove answer after testing!
   # add code to drain battery each time used
   # the way out could be the correct extension
   os.system('clear')
   global charge
   extension = 102
-  print(f'Phone charge is {charge}\n')
-
+  print(' Battery'.center (30))
   # make a battery bar display
+  print('---------|'.center (30))
   for i in range(charge):
-    print(f'{i*"█"}{(charge-i)*"░"}'.center(20, ' '))
-    sleep(0.1)
-
+    #print(f'{i*"█"}{(charge-i)*"░"}'.center(20, ' '))
+    print ("\r" + "#" * i, end = "".center(30))
+    sleep(0.2)
+  print ('\n')
   charge -= 1  # losing power
   if charge == 0:
     print('\n Game over ..')
     exit()
-  answer = randint(1, 4)
+  #answer = randint(1, 4)
   if answer == 1:  # no answer
     ring(10)
-    print('\n\nClick.')
+    print('\n\n> Click.')
   elif answer == 2:
     ring(4)
     print(
-        "BEEP..\n\nThe number you wish to call cannot be completed as dialed ")
+        "BEEP..\n\n> The number you wish to call cannot be completed as dialed ")
   elif answer == 3:
     ring(3)
     sleep(1)
@@ -63,19 +64,28 @@ def use_phone(room_name):
     )
     sleep(1)
     print('\nBEEP!\n')
-    input('\nyour meassage? ')
+    input('\nyour meassage? ')    # should I save the message?
   else:
     ring(4)
     print(
-        '''\n\nWelcome to Birch Rescue Services. \\nIf you know your parties extension, you may dial it at any time
-\n\nPlease pay careful attention to this message as our options have changed.
-\nFor help, dial 1, to register a complaint, dial 2, for food delivery, dial 3.
-\nDial 4 to speak with an operator, or stay on the line and a representative will be with you shortly.
-\n\n(tuneless phone music plays endlessly )''')
-    input('Dial extension? .. ')
-    if extension == 102:
-      print("you have reached the office of .   ")
+        '''\n\n>  Welcome to Birch Rescue Services. \n\n> If you know your partie\'s extension, you may dial it at any time
+\n\n> Please pay careful attention to this message as our options have changed.
+\n\n> For help, dial 1, to register a complaint, dial 2, for food delivery, dial 3.
+\n\n> Dial 4 to speak with an operator, or stay on the line and a representative will be with you shortly.
+\n\n> (tuneless phone music plays endlessly )''')
+  response = str(input('\n> Please choose an option .. '))
+  if response == "1" or response == "2":
+    print ("Sorry we missed you, please call during normal business hours")
+    for i in range (20):
+      print ("\r" + "#" * i, end = "")
+      sleep (.5)
+  elif response == "3":
+    pizza()
+  elif response == "4":
+    print ('''> Welcome.. Your location has been established.. Help is on the way''')
 
+def pizza():
+  print('pizza is delivered...')
 
 def ring(times):
   for _ring in range(times):
@@ -98,8 +108,8 @@ def unlock_door(room_name):
 def read_note(room_name):
   # add the ability to use phones light to read
   print(
-      '''You have to use your phone's flashlight to read the waterstained note.\n\nIt seems to be an advert for a pizza joint.\n\n
-It reads: "Call us at 555-0110 for fast pizza delivery.  There is a second number scribbled in pencil..   It looks like B.R.S. 555-0220.\n\n'''
+      '''You have to use your phone's flashlight to read the waterstained note.\n\n> It seems to be an advert for a pizza joint.\n\n>
+It reads: "Call us at 555-0110 for fast pizza delivery.  There is a second number scribbled in pencil..   It looks like B.R.S. 555-0220.\n\n> '''
   )
 
 def secret_room(room_name):
@@ -113,5 +123,5 @@ def game_help(room_name):
 
 
 if __name__ == "__main__":
-
-  print(inventory)
+  use_phone('bed')
+  # print(inventory)

@@ -1,10 +1,8 @@
 
-#from play import *
 from play import inventory,print_room_description, navigate
 from time import sleep
 
 #########################  Rooms ########################
-
 
 def road():
   this_room = 'road'
@@ -55,7 +53,6 @@ def secret_room():
 
 
 def finish():
-  #print(dialog['finish'])  # in script figure it out later.
   sleep(2)
   print('''
 ### #           ###       #
