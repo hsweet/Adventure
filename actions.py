@@ -30,25 +30,25 @@ os.system('clear')
 #      Put all action functions below. def your_room(room_name) the parameter is required          #
 ####################################################################################################
 
-def use_phone(room_name, answer = 4):  # remove answer after testing!
+def use_phone(room_name):  # remove answer after testing!
   # add code to drain battery each time used
   # the way out could be the correct extension
   os.system('clear')
   global charge
   extension = 102
-  print(' Battery'.center (30))
+  print(' Battery')
   # make a battery bar display
-  print('---------|'.center (30))
+  print('---------|')
   for i in range(charge):
     #print(f'{i*"█"}{(charge-i)*"░"}'.center(20, ' '))
-    print ("\r" + "#" * i, end = "".center(30))
+    print ("\r" + "#" * i, end = "")
     sleep(0.2)
   print ('\n')
   charge -= 1  # losing power
   if charge == 0:
     print('\n Game over ..')
     exit()
-  #answer = randint(1, 4)
+  answer = randint(1, 4)
   if answer == 1:  # no answer
     ring(10)
     print('\n\n> Click.')
@@ -73,16 +73,16 @@ def use_phone(room_name, answer = 4):  # remove answer after testing!
 \n\n> For help, dial 1, to register a complaint, dial 2, for food delivery, dial 3.
 \n\n> Dial 4 to speak with an operator, or stay on the line and a representative will be with you shortly.
 \n\n> (tuneless phone music plays endlessly )''')
-  response = str(input('\n> Please choose an option .. '))
-  if response == "1" or response == "2":
-    print ("Sorry we missed you, please call during normal business hours")
-    for i in range (20):
-      print ("\r" + "#" * i, end = "")
-      sleep (.5)
-  elif response == "3":
-    pizza()
-  elif response == "4":
-    print ('''> Welcome.. Your location has been established.. Help is on the way''')
+    response = str(input('\n> Please choose an option .. '))
+    if response == "1" or response == "2":
+      print ("Sorry we missed you, please call during normal business hours")
+      for i in range (20):
+        print ("\r" + "#" * i, end = "")
+        sleep (.5)
+    elif response == "3":
+      pizza()
+    elif response == "4":
+      print ('''> Welcome.. Your location has been established.. Help is on the way''')
 
 def pizza():
   print('pizza is delivered...')

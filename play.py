@@ -5,6 +5,7 @@ from script import *
 import sys
 from time import sleep
 
+############# global variables ###############
 
 inventory = actions.inventory
 visited_rooms = actions.visited_rooms
@@ -61,11 +62,11 @@ def describe_room(room, objects_in_room, increment = True):
     typewrite(script[room])
   print('\n'+'_' * 30)
   game_state = [inventory, room, actions.charge, visited_rooms]
-  save_game_state(game_state)
+  save_game(game_state)
 
 
 # Saving game state to a JSON file in the current directory
-def save_game_state(game_state):
+def save_game(game_state):
   #file_path = os.getcwd()
   try:
     with open(file_path + '/game_state.json', 'w') as file:
