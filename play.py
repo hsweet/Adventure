@@ -1,11 +1,11 @@
 import actions
 import os
 import json
-import rooms
 from script import *
 import sys
 from time import sleep
 
+############# global variables ###############
 
 inventory = actions.inventory
 visited_rooms = actions.visited_rooms
@@ -36,7 +36,7 @@ def typewrite(message):
       sleep(1)
 
 
-def print_room_description(room, objects_in_room, increment = True):
+def describe_room(room, objects_in_room, increment = True):
   """
     Prints the description and objects in the current room and saves the state of the game.
     """
@@ -62,64 +62,18 @@ def print_room_description(room, objects_in_room, increment = True):
     typewrite(script[room])
   print('\n'+'_' * 30)
   game_state = [inventory, room, actions.charge, visited_rooms]
-  save_game_state(game_state)
+  save_game(game_state)
 
 
 # Saving game state to a JSON file in the current directory
-def save_game_state(game_state):
+def save_game(game_state):
   #file_path = os.getcwd()
   try:
     with open(file_path + '/game_state.json', 'w') as file:
       json.dump(game_state, file)
   except FileNotFoundError:
     print('Can\'t find the file to save to ')
-'''
-# Loading game state from a JSON file in the current directory
-# room_functions is requiring a circular import.
-def load_game_state():
-  room_functions = {
-      'entry': rooms.entry,
-      'kitchen': rooms.kitchen,
-      'closet': rooms.closet,
-      'secret_room':rooms.secret_room
-      # Add more room names and functions as needed
-  }
-  try:
-    with open(file_path + '/game_state.json', 'r') as file:
-      file_contents = file.read()
-      if not file_contents:  # Check if the file is empty
-        print("No saved game state found. Starting new game...\n")
-        room_functions['entry']()
-        return
-      game_state = json.loads(file_contents)
-      game_state[0]
-      current_room = game_state[1]
-      actions.charge = game_state[2]
-      room_functions[current_room]()
-  except FileNotFoundError:
-    print("No saved game state found. Starting new game...\n")
-    room_functions['entry']()
 
-
-def load_game_state0():
-  # used to load saved rooms, used by itself.
-  room_functions = {
-      'entry': entry,
-      'kitchen': kitchen,
-      'closet': closet
-      # Add more room names and functions as needed
-  }
-  try:
-    with open(file_path + '/game_state.json', 'r') as file:
-      game_state = json.load(file)
-      game_state[0]
-      current_room = game_state[1]
-      actions.charge = game_state[2]
-      room_functions[current_room]()
-  except FileNotFoundError:
-    print("No saved game state found. Starting new game...\n")
-    room_functions[current_room]()
-'''
 
 def navigate(exits, current_room, objects_in_room):
   """
@@ -160,7 +114,7 @@ def navigate(exits, current_room, objects_in_room):
       continue
     elif choice == 'l':
       print ("Looking")
-      print_room_description(current_room, objects_in_room, increment=False)
+      describe_room(current_room, objects_in_room, increment=False)
       continue
     elif choice == 'q':
       os.system('clear')
@@ -212,36 +166,3 @@ def use_object(inventory, this_room):
       print(f'\n> You cannot use the {obj_to_use}.')
   else:
     print('\n> You do not have that object in your inventory.')
-
-
-def load_game_state():
-  room_functions = {
-      'entry': rooms.entry,
-      'kitchen': rooms.kitchen,
-      'closet': rooms.closet,
-      'secret_room':rooms.secret_room
-      # Add more room names and functions as needed
-  }
-  try:
-    with open(file_path + '/game_state.json', 'r') as file:
-      file_contents = file.read()
-      if not file_contents:  # Check if the file is empty
-        print("No saved game state found. Starting new game...\n")
-        room_functions['entry']()
-        return
-
-      # load and parse saved game
-      game_state = json.loads(file_contents)
-      inventory = game_state[0]
-      actions.update_inventory(inventory)
-      current_room = game_state[1]
-      actions.charge = game_state[2]
-      previous_visits = game_state[3]
-      actions.update_visited_rooms(previous_visits)
-
-      # go to saved room
-      room_functions[current_room]()
-
-  except FileNotFoundError:
-    print("No saved game state found. Starting new game...\n")
-    room_functions['entry']()
