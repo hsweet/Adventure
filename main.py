@@ -12,19 +12,21 @@ os.system('clear')
 Start a new game or load previous.
 
 '''
+
+
 def new_game():
   '''Start a new game'''
 
   play.typewrite('''\nYour car has broken down on a dark, rainy night.
 \nYou can see a light from an old mansion behind an iron gate thru the woods\n'''
-        )
+                 )
   answer = input('\nWalk to house? y/n..')
   answer = answer[0].lower()  # clean up input
   if answer == 'y':
     rooms.entry()
   else:
     play.typewrite(
-       '''\nYou chose to stay in your car.  The wind gets stronger and stronger.  There is no cell signal. You wait.
+        '''\nYou chose to stay in your car.  The wind gets stronger and stronger.  There is no cell signal. You wait.
 \n\nA large tree falls on your car''')
     sleep(1)
     os.system('clear')
@@ -37,6 +39,7 @@ def new_game():
  #              ###
 ''')
 
+
 def load_game():
   # loads last game
 
@@ -44,7 +47,7 @@ def load_game():
       'entry': rooms.entry,
       'kitchen': rooms.kitchen,
       'closet': rooms.closet,
-      'secret_room':rooms.secret_room
+      'secret_room': rooms.secret_room
       # Add more room names and functions as needed
   }
   try:
@@ -82,6 +85,6 @@ def load_game():
 if __name__ == "__main__":
   intro.wrapper(intro.center, "Birch Rescue Squad")  # Use your title
   if input('Load saved game? (y/n) ').lower() == 'y':
-    load_game()    # load last game
+    load_game()  # load last game
   else:
-    new_game()    # start a new game
+    new_game()  # start a new game
